@@ -66,3 +66,12 @@ For example, to view the logs for connect, try
 * FilePulse: https://github.com/streamthoughts/kafka-connect-file-pulse
 
 
+## Reference
+
+* Confluent Platform: https://docs.confluent.io/
+* Confluent Hub: https://www.confluent.io/hub
+* ksqlDB: https://ksqldb.io/
+* ksqlDB Examples: https://ksqldb.io/examples.html
+
+
+
