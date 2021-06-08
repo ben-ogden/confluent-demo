@@ -29,7 +29,11 @@ To connect to PostgreSQL -
 
 ## Troubleshooting
 
-View the logs for a container with 
+To see status of containers in the stack, use
+
+`docker ps`
+
+To view the logs for a container with 
 
 `docker compose logs <container-name>`
 
