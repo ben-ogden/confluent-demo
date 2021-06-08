@@ -52,7 +52,14 @@ For example, to view the logs for connect, try
 
 `docker compose logs connect`
 
-# Generating Rich Data
+
+# Generating Sample Data
+
+## Using Datagen
+
+TODO
+
+## Using Voluble Source Connector + ksqlDB
 
 In addition to the REST API offered by Connect, and the Connect view in Control Center, ksqlDB can also manage connectors. Connect to ksqlDB with the CLI as shown below (or use the ksqlDB interface in Control Center at http://localhost:9021)
 
@@ -98,6 +105,4 @@ Remove the connector with `DROP CONNECTOR rich-sample-data;`
 * Confluent Hub: https://www.confluent.io/hub
 * ksqlDB: https://ksqldb.io/
 * ksqlDB Examples: https://ksqldb.io/examples.html
-
-
-
+* kafkacat: https://docs.confluent.io/platform/current/app-development/kafkacat-usage.html
