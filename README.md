@@ -4,7 +4,7 @@ A docker-based quick start for a Confluent demo
 https://user-images.githubusercontent.com/7433434/121204315-ceee7f00-c844-11eb-99f5-a2eb0cfd5012.mov
 
 
-## Setup
+# Setup
 
 Starts Confluent Platform 6.1: Zookeeper, Confluent Server (Broker), Schema Registry, Connect, ksqlDB, Control Center and the REST Proxy. Includes optional containers for ksqlDB CLI and kafkacat and PostgreSQL.
 
@@ -52,8 +52,34 @@ For example, to view the logs for connect, try
 
 `docker compose logs connect`
 
+# Generating Rich Data
 
-## Connector Documentation
+In addition to the REST API offered by Connect, and then Connect view in Control Center, ksqlDB can also manage connectors. Connect to ksqlDB with the CLI as shown below (or use the ksqlDB interface in Control Center at http://localhost:9021)
+
+`docker exec -it ksqldb-cli ksql http://ksqldb-server:8088`
+
+Create a source connector called 'rich-sample-data'
+
+```
+CREATE SOURCE CONNECTOR rich-sample-data WITH (
+  'connector.class' = 'io.mdrogalis.voluble.VolubleSourceConnector',
+  'genkp.people.with' = '#{Internet.uuid}',
+  'genv.people.name.with' = '#{Name.full_name}',
+  'genv.people.creditCardNumber.with' = '#{Finance.credit_card}',
+  'global.throttle.ms' = '500'
+);
+```
+
+View the newly created `people` topic in Control Center, or from the ksqlDB CLI run
+
+`PRINT 'people' FROM BEGINNING;`
+
+See all connectors using `show connectors;`
+
+Remove the connector with `DROP CONNECTOR rich-sample-data;`
+
+
+# Connector Documentation
 
 ### Sample Data
 
@@ -66,7 +92,7 @@ For example, to view the logs for connect, try
 * FilePulse: https://github.com/streamthoughts/kafka-connect-file-pulse
 
 
-## Reference
+# Reference
 
 * Confluent Platform: https://docs.confluent.io/
 * Confluent Hub: https://www.confluent.io/hub
