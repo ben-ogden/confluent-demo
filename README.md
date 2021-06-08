@@ -24,6 +24,12 @@ View available connectors from Control Center, or use the REST interface -
 
 `curl -s localhost:8083/connector-plugins|jq '.[].class'`
 
+## ksqlDB
+
+To access the ksqlDB CLI, run
+
+`docker compose exec ksqldb-cli ksql http://ksqldb-server:8088`
+
 
 ## PostgreSQL
 
