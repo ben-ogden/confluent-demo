@@ -9,6 +9,9 @@ Starts Confluent Platform 6.1: Zookeeper, Confluent Server (Broker), Schema Regi
 
 Access Control Center at http://localhost:9021
 
+To connect to PostgreSQL -
+`docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB'`
+
 Important: For macOS and Windows, Docker runs in a virtual machine, and you must allocate at least 8 GB of RAM for the Docker VM to run the Kafka stack. The default is 2 GB.
 
 
