@@ -27,6 +27,14 @@ To connect to PostgreSQL -
 
 `docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB'`
 
+## Troubleshooting
 
+View the logs for a container with 
+
+`docker compose logs <container-name>`
+
+For example, to view the logs for connect, try 
+
+`docker compose logs connect`
 
 
