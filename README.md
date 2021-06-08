@@ -54,7 +54,7 @@ For example, to view the logs for connect, try
 
 # Generating Rich Data
 
-In addition to the REST API offered by Connect, and then Connect view in Control Center, ksqlDB can also manage connectors. Connect to ksqlDB with the CLI as shown below (or use the ksqlDB interface in Control Center at http://localhost:9021)
+In addition to the REST API offered by Connect, and the Connect view in Control Center, ksqlDB can also manage connectors. Connect to ksqlDB with the CLI as shown below (or use the ksqlDB interface in Control Center at http://localhost:9021)
 
 `docker exec -it ksqldb-cli ksql http://ksqldb-server:8088`
 
