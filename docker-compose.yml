@@ -198,10 +198,12 @@ services:
     # To connect to the DB:
     #   docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB'
     # *-----------------------------*
-    image: postgres
+    image: debezium/example-postgres
     container_name: postgres
     environment:
      - POSTGRES_USER=postgres
      - POSTGRES_PASSWORD=postgres
-    volumes:
-     - ./data/postgres:/docker-entrypoint-initdb.d/
+    # Uncomment volumes to enable specific init scripts otherwise sample inventory
+    # database created for default demo
+    # volumes:
+     # - ./data/postgres:/docker-entrypoint-initdb.d/
