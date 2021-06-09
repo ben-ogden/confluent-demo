@@ -30,14 +30,6 @@ To access the ksqlDB CLI, run
 
 `docker compose exec ksqldb-cli ksql http://ksqldb-server:8088`
 
-
-## PostgreSQL
-
-To connect to PostgreSQL -
-
-`docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB'`
-
-
 ## Troubleshooting
 
 To see status of containers in the stack, use
@@ -86,12 +78,69 @@ View the newly created topic right from the ksqlDB CLI using `PRINT 'people' FRO
 Remove the connector with `DROP CONNECTOR rich-datagen;`
 
 
+# PostgreSQL CDC
+
+First launch psql to inspect the inventory database already created -
+
+`docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB'`
+
+Note the sample inventory data already created. 
+
+```
+postgres=# \dt inventory.*
+                List of relations
+  Schema   |       Name       | Type  |  Owner
+-----------+------------------+-------+----------
+ inventory | customers        | table | postgres
+ inventory | geom             | table | postgres
+ inventory | orders           | table | postgres
+ inventory | products         | table | postgres
+ inventory | products_on_hand | table | postgres
+ inventory | spatial_ref_sys  | table | postgres
+(6 rows)
+
+postgres=# select * from inventory.products;
+ id  |        name        |                       description                       | weight
+-----+--------------------+---------------------------------------------------------+--------
+ 101 | scooter            | Small 2-wheel scooter                                   |   3.14
+ 102 | car battery        | 12V car battery                                         |    8.1
+ 103 | 12-pack drill bits | 12-pack of drill bits with sizes ranging from #40 to #3 |    0.8
+ 104 | hammer             | 12oz carpenter's hammer                                 |   0.75
+ 105 | hammer             | 14oz carpenter's hammer                                 |  0.875
+ 106 | hammer             | 16oz carpenter's hammer                                 |      1
+ 107 | rocks              | box of assorted rocks                                   |    5.3
+ 108 | jacket             | water resistent black wind breaker                      |    0.1
+ 109 | spare tire         | 24 inch spare tire                                      |   22.2
+(9 rows)
+
+postgres=# select * from inventory.orders;
+  id   | order_date | purchaser | quantity | product_id
+-------+------------+-----------+----------+------------
+ 10001 | 2016-01-16 |      1001 |        1 |        102
+ 10002 | 2016-01-17 |      1002 |        2 |        105
+ 10003 | 2016-02-19 |      1002 |        2 |        106
+ 10004 | 2016-02-21 |      1003 |        1 |        107
+(4 rows)
+```
+
+Create the PostgresSQL CDC connector -
+
+`curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://localhost:8083/connectors/ -d @connectors/register-postgres.json`
+
+Open Control Center to view newly created topics and data. 
+
+Update a record in postgres to see it flow into Kafka.
+
+
 # Connector Documentation
 
 ### Sample Data
 
 * Datagen Source Connector: https://github.com/confluentinc/kafka-connect-datagen
 * Voluble Source Connector: https://github.com/MichaelDrogalis/voluble
+
+### Database
+* Debezium PostgreSQL Souce Connector: https://docs.confluent.io/debezium-connect-postgres-source/current/index.html
 
 ### File-based
 
