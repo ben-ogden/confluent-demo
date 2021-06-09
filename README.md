@@ -109,10 +109,10 @@ postgres=# select * from inventory.orders;
 (4 rows)
 ```
 
-Create the PostgresSQL CDC connector -
+Quit psql with `\q` or open a new shell and run the following to create the connector -
 
 ```
-curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" \
+curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 http://localhost:8083/connectors/ -d @connectors/register-postgres.json
 ```
 
