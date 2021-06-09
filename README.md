@@ -55,20 +55,22 @@ For example, to view the logs for connect, try
 
 # Generating Sample Data
 
-## Using Datagen
+### Datagen Source Connector (setup with REST API)
 
 TODO
 
-## Using Voluble Source Connector + ksqlDB
+### Voluble Source Connector (setup with ksqlDB)
 
 In addition to the REST API offered by Connect, and the Connect view in Control Center, ksqlDB can also manage connectors. Connect to ksqlDB with the CLI as shown below (or use the ksqlDB interface in Control Center at http://localhost:9021)
 
 `docker exec -it ksqldb-cli ksql http://ksqldb-server:8088`
 
-Create a source connector called 'rich-sample-data'
+See all existing connectors using `SHOW CONNECTORS;`
+
+Create a source connector to generate richer sample data.
 
 ```
-CREATE SOURCE CONNECTOR rich-sample-data WITH (
+CREATE SOURCE CONNECTOR rich-datagen WITH (
   'connector.class' = 'io.mdrogalis.voluble.VolubleSourceConnector',
   'genkp.people.with' = '#{Internet.uuid}',
   'genv.people.name.with' = '#{Name.full_name}',
@@ -77,13 +79,11 @@ CREATE SOURCE CONNECTOR rich-sample-data WITH (
 );
 ```
 
-View the newly created `people` topic in Control Center, or from the ksqlDB CLI run
+Inspect the connector status using `DESCRIBE CONNECTOR 'rich-datagen';`
 
-`PRINT 'people' FROM BEGINNING;`
+View the newly created topic right from the ksqlDB CLI using `PRINT 'people' FROM BEGINNING;`
 
-See all connectors using `show connectors;`
-
-Remove the connector with `DROP CONNECTOR rich-sample-data;`
+Remove the connector with `DROP CONNECTOR rich-datagen;`
 
 
 # Connector Documentation
